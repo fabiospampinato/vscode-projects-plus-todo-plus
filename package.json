@@ -1,0 +1,98 @@
+{
+  "name": "vscode-projects-plus-todo-plus",
+  "displayName": "Projects+ Todo+",
+  "description": "Bird's-eye view over your projects, view all your todo files aggregated into one.",
+  "icon": "resources/logo-128x128.png",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "out/src/extension.js",
+  "publisher": "fabiospampinato",
+  "activationEvents": [
+    "onCommand:projects.todo"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Projects+ Todo+ - Configuration",
+      "properties": {
+        "projectsTodo.indentation": {
+          "type": "string",
+          "description": "String used for indentation",
+          "default": "  "
+        },
+        "projectsTodo.hideEmpty": {
+          "type": "boolean",
+          "description": "Hide groups and projects with no todos",
+          "default": true
+        },
+        "projectsTodo.hideDone": {
+          "type": "boolean",
+          "description": "Hide any done todo",
+          "default": false
+        },
+        "projectsTodo.hideCancelled": {
+          "type": "boolean",
+          "description": "Hide any cancelled todo",
+          "default": false
+        },
+        "projectsTodo.hideComments": {
+          "type": "boolean",
+          "description": "Hide any cancelled todo",
+          "default": false
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "projects.todo",
+        "title": "Projects: Todo"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "publish": "vsce publish && npm publish",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "bugs": {
+    "url": "https://github.com/fabiospampinato/vscode-projects-plus-todo-plus/issues"
+  },
+  "author": {
+    "name": "Fabio Spampinato",
+    "email": "spampinabio@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabiospampinato/vscode-projects-plus-todo-plus.git"
+  },
+  "engines": {
+    "vscode": "^1.10.0"
+  },
+  "keywords": [
+    "vscode",
+    "extension",
+    "projects",
+    "todo",
+    "tasks"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "vscode-projects-plus": "^1.6.1",
+    "vscode-todo-plus": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.40",
+    "tslint": "^4.4.2",
+    "typescript": "~2.4.0",
+    "vscode": "^1.1.4"
+  },
+  "extensionDependencies": [
+    "fabiospampinato.vscode-projects-plus",
+    "fabiospampinato.vscode-todo-plus"
+  ]
+}
