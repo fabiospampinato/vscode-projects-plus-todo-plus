@@ -3,7 +3,7 @@
   "displayName": "Projects+ Todo+",
   "description": "Bird's-eye view over your projects, view all your todo files aggregated into one.",
   "icon": "resources/logo-128x128.png",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "main": "out/src/extension.js",
   "publisher": "fabiospampinato",
@@ -38,6 +38,11 @@
         "projectsTodo.hideComments": {
           "type": "boolean",
           "description": "Hide any cancelled todo",
+          "default": false
+        },
+        "projectsTodo.filterRegex": {
+          "type": "string",
+          "description": "List only projects having a name matching this regex",
           "default": false
         }
       }

@@ -26,6 +26,8 @@ async function todo () {
     const group = parent.name,
           todo = TodoUtils.todo.get ( project.path );
 
+    if ( config.filterRegex && !project.name.match ( new RegExp ( config.filterRegex ) ) ) return;
+
     if ( !config.hideEmpty || ( todo && todo.content ) ) {
 
       if ( group && group != lastGroup ) {
