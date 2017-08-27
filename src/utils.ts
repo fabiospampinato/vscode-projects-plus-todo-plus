@@ -73,6 +73,12 @@ const Utils = {
 
     },
 
+    stripEmptyLines ( str ) {
+
+      return Utils.string.stripRegex ( str, /^\s*[\r\n]/gm, true );
+
+    },
+
     indent ( str, depth = 1, indentation = Config.get ().indentation ) {
 
       const level = _.repeat ( indentation, depth );

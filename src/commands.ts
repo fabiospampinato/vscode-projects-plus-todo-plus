@@ -11,38 +11,66 @@ import ProjectsUtils from '../node_modules/vscode-projects-plus/src/utils';
 import TodoConsts from '../node_modules/vscode-todo-plus/src/consts';
 import TodoUtils from '../node_modules/vscode-todo-plus/src/utils';
 
-/* COMMANDS */
+/* HELPERS */
 
-async function todo () {
+function parseTodo ( config, str ) {
 
-  const config = Config.get (),
-        projectsConfig = await ProjectsConfig.get ();
+  str = Utils.string.stripEmptyLines ( str );
 
-  let lastGroup,
-      content = '';
+  if ( config.hideDone ) {
 
-  ProjectsUtils.config.walkProjects ( projectsConfig, ( project, parent, depth ) => {
+    str = Utils.string.stripRegex ( str, TodoConsts.regexes.todoDone );
 
-    const group = parent.name,
-          todo = TodoUtils.todo.get ( project.path );
+  }
 
-    if ( config.filterRegex && !project.name.match ( new RegExp ( config.filterRegex ) ) ) return;
+  if ( config.hideCancelled ) {
 
-    if ( !config.hideEmpty || ( todo && todo.content ) ) {
+    str = Utils.string.stripRegex ( str, TodoConsts.regexes.todoCancel );
 
-      if ( group && group != lastGroup ) {
+  }
 
-        content += Utils.string.indent ( group, depth - 1 ) + TodoConsts.symbols.project + '\n'; // Group
+  if ( config.hideComments ) {
 
-        lastGroup = group;
+    str = Utils.string.stripRegex ( str, TodoConsts.regexes.comment );
 
-      }
+  }
 
-      content += Utils.string.indent ( project.name, depth ) + TodoConsts.symbols.project + '\n'; // Project
+  return str;
 
-      if ( todo ) {
+}
 
-        content += Utils.string.indent ( todo.content, depth + 1 ) + '\n'; // Todo
+function filterProjectsByConfig ( config, obj ) {
+
+  ProjectsUtils.config.walkProjects ( obj, ( project, parent ) => {
+
+    if ( config.filterRegex && !project.name.match ( new RegExp ( config.filterRegex ) ) ) {
+
+      parent.projects = parent.projects.filter ( p => p !== project );
+
+    }
+
+  });
+
+}
+
+function fetchTodos ( config, obj ) {
+
+  ProjectsUtils.config.walkProjects ( obj, project => {
+
+    const todo = TodoUtils.todo.get ( project.path );
+
+    if ( todo ) {
+
+      const parsed = parseTodo ( config, todo.content );
+
+      if ( parsed ) {
+
+        const linesNr = parsed.split ( '\n' ).filter ( _.identity ).length,
+              projectsNr = TodoUtils.getAllMatches ( parsed, TodoConsts.regexes.project, true ).length;
+
+        if ( linesNr === projectsNr ) return; // Only projects -> not interesting
+
+        project.todo = parsed;
 
       }
 
@@ -50,29 +78,98 @@ async function todo () {
 
   });
 
-  if ( !content ) return vscode.window.showErrorMessage ( 'You don\'t have any todo across your projects' );
+}
 
-  content = Utils.string.stripRegex ( content, /^\s*[\r\n]/gm, true );
+function filterProjectsByTodo ( config, obj ) {
 
-  if ( config.hideDone ) {
+  if ( !config.hideEmpty ) return;
 
-    content = Utils.string.stripRegex ( content, TodoConsts.regexes.todoDone );
+  ProjectsUtils.config.walkProjects ( obj, ( project, parent ) => {
+
+    if ( !project.todo ) {
+
+      parent.projects = parent.projects.filter ( p => p !== project );
+
+    }
+
+  });
+
+}
+
+function filterGroups ( config, obj, maxDepth = Infinity ) {
+
+  if ( !config.hideEmpty ) return;
+
+  let maxFilteredDepth = -1;
+
+  ProjectsUtils.config.walkGroups ( obj, ( group, parent, depth ) => {
+
+    if ( depth > maxDepth ) return;
+
+    if ( ( !group.projects || !group.projects.length ) && ( !group.groups || !group.groups.length ) ) {
+
+      parent.groups = parent.groups.filter ( g => g !== group );
+
+      maxFilteredDepth = Math.max ( maxFilteredDepth, depth );
+
+    }
+
+  });
+
+  if ( maxFilteredDepth > 0 ) {
+
+    filterGroups ( config, obj, maxFilteredDepth - 1 );
 
   }
 
-  if ( config.hideCancelled ) {
+}
 
-    content = Utils.string.stripRegex ( content, TodoConsts.regexes.todoCancel );
+function mergeTodos ( config, obj ) {
+
+  const lines = [];
+
+  ProjectsUtils.config.walk ( obj, ( item, parent, depth ) => {
+
+    lines.push ( Utils.string.indent ( item.name, depth ) + TodoConsts.symbols.project );
+
+    if ( item.todo ) {
+
+      lines.push ( Utils.string.indent ( item.todo, depth + 1 ) );
+
+    }
+
+  }, _.noop, _.noop );
+
+  return lines.join ( '\n' );
+
+}
+
+/* COMMANDS */
+
+async function todo () {
+
+  const config = Config.get (),
+        obj = _.cloneDeep ( await ProjectsConfig.get () );
+
+  filterProjectsByConfig ( config, obj );
+
+  fetchTodos ( config, obj );
+
+  filterProjectsByTodo ( config, obj );
+
+  filterGroups ( config, obj );
+
+  const content = Utils.string.stripEmptyLines ( mergeTodos ( config, obj ) );
+
+  if ( content ) {
+
+    Utils.editor.open ( content );
+
+  } else {
+
+    vscode.window.showInformationMessage ( 'You don\'t have any todo across your projects' );
 
   }
-
-  if ( config.hideComments ) {
-
-    content = Utils.string.stripRegex ( content, TodoConsts.regexes.comment );
-
-  }
-
-  Utils.editor.open ( content );
 
 }
 

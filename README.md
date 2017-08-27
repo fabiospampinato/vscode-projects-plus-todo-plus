@@ -34,7 +34,7 @@ Projects: Todo // Open a file containg all todos across your projects
   "projectsTodo.hideEmpty": true, // Hide groups and projects with no todos
   "projectsTodo.hideDone": true, // Hide any done todo
   "projectsTodo.hideCancelled": true, // Hide any cancelled todo
-  "projectsTodo.hideComments": false, // Hide any cancelled todo
+  "projectsTodo.hideComments": false, // Hide all the comments
   "projectsTodo.filterRegex": false // List only projects having a name matching this regex
 }
 ```

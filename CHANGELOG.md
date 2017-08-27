@@ -1,3 +1,6 @@
+### Version 1.2.0
+- Rewritten, fixes many bugs
+
 ### Version 1.1.1
 - Updated some dependencies
 

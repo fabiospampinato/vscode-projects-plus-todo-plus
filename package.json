@@ -3,7 +3,7 @@
   "displayName": "Projects+ Todo+",
   "description": "Bird's-eye view over your projects, view all your todo files aggregated into one.",
   "icon": "resources/logo-128x128.png",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "license": "MIT",
   "main": "out/src/extension.js",
   "publisher": "fabiospampinato",
@@ -87,7 +87,7 @@
   ],
   "dependencies": {
     "lodash": "^4.17.4",
-    "vscode-projects-plus": "^1.7.2",
+    "vscode-projects-plus": "^1.8.2",
     "vscode-todo-plus": "^1.2.2"
   },
   "devDependencies": {
