@@ -31,6 +31,7 @@ Projects: Todo // Open a file containg all todos across your projects
 ```js
 {
   "projectsTodo.indentation": "  ", // String used for indentation
+  "projectsTodo.showPaths": true, // Show todo files paths
   "projectsTodo.hideEmpty": true, // Hide groups and projects with no todos
   "projectsTodo.hideDone": true, // Hide any done todo
   "projectsTodo.hideCancelled": true, // Hide any cancelled todo
@@ -41,7 +42,7 @@ Projects: Todo // Open a file containg all todos across your projects
 
 ## Demo
 
-![Demo](resources/demo.gif)
+![Demo](resources/demo.png)
 
 ## License
 

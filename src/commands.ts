@@ -61,16 +61,16 @@ function fetchTodos ( config, obj ) {
 
     if ( todo ) {
 
-      const parsed = parseTodo ( config, todo.content );
+      todo.content = parseTodo ( config, todo.content );
 
-      if ( parsed ) {
+      if ( todo.content ) {
 
-        const linesNr = parsed.split ( '\n' ).filter ( _.identity ).length,
-              projectsNr = TodoUtils.getAllMatches ( parsed, TodoConsts.regexes.project, true ).length;
+        const linesNr = todo.content.split ( '\n' ).filter ( _.identity ).length,
+              projectsNr = TodoUtils.getAllMatches ( todo.content, TodoConsts.regexes.project, true ).length;
 
-        if ( linesNr === projectsNr ) return; // Only projects -> not interesting
+        if ( config.hideEmpty && linesNr === projectsNr ) return; // Only projects is considered empty
 
-        project.todo = parsed;
+        project.todo = todo;
 
       }
 
@@ -130,11 +130,22 @@ function mergeTodos ( config, obj ) {
 
   ProjectsUtils.config.walk ( obj, ( item, parent, depth ) => {
 
-    lines.push ( Utils.string.indent ( item.name, depth ) + TodoConsts.symbols.project );
+    let fileTag = '';
+
+    if ( config.showPaths && item.todo ) {
+
+      const normalizedPath = path.normalize ( item.todo.path ),
+            uri = vscode.Uri.file ( normalizedPath );
+
+      fileTag = ` @file://${uri.path}`;
+
+    }
+
+    lines.push ( Utils.string.indent ( item.name, depth ) + TodoConsts.symbols.project + fileTag );
 
     if ( item.todo ) {
 
-      lines.push ( Utils.string.indent ( item.todo, depth + 1 ) );
+      lines.push ( Utils.string.indent ( item.todo.content, depth + 1 ) );
 
     }
 
