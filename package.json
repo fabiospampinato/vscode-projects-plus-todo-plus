@@ -78,7 +78,7 @@
     "url": "https://github.com/fabiospampinato/vscode-projects-plus-todo-plus.git"
   },
   "engines": {
-    "vscode": "^1.13.0"
+    "vscode": "^1.15.0"
   },
   "keywords": [
     "vscode",
