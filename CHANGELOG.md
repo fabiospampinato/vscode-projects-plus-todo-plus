@@ -1,3 +1,6 @@
+### Version 1.3.1
+- Updated readme
+
 ### Version 1.3.0
 - Added ability to show todo files paths
 

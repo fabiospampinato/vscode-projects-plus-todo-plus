@@ -23,7 +23,7 @@ ext install vscode-projects-plus-todo-plus
 It adds 1 command to the command palette:
 
 ```js
-Projects: Todo // Open a file containg all todos across your projects
+Projects: Todo // Open a file containg all your todo files aggregated into one
 ```
 
 ## Settings
@@ -31,8 +31,8 @@ Projects: Todo // Open a file containg all todos across your projects
 ```js
 {
   "projectsTodo.indentation": "  ", // String used for indentation
-  "projectsTodo.showPaths": true, // Show todo files paths
-  "projectsTodo.hideEmpty": true, // Hide groups and projects with no todos
+  "projectsTodo.showPaths": true, // Show individual todo files paths
+  "projectsTodo.hideEmpty": true, // Hide projects and groups without any todo
   "projectsTodo.hideDone": true, // Hide any done todo
   "projectsTodo.hideCancelled": true, // Hide any cancelled todo
   "projectsTodo.hideComments": false, // Hide all the comments
