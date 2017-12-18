@@ -1,3 +1,7 @@
+### Version 1.4.0
+- Added support for Projects+ tilde expansion
+- Added an option for hiding archives
+
 ### Version 1.3.2
 - Updated some dependencies
 
