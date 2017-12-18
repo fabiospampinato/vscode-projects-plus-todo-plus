@@ -36,6 +36,7 @@ Projects: Todo // Open a file containg all your todo files aggregated into one
   "projectsTodo.hideDone": true, // Hide any done todo
   "projectsTodo.hideCancelled": true, // Hide any cancelled todo
   "projectsTodo.hideComments": false, // Hide all the comments
+  "projectsTodo.hideArchives": true, // Hide any archive section
   "projectsTodo.filterRegex": false // List only projects having a name matching this regex
 }
 ```

@@ -45,6 +45,11 @@
           "description": "Hide any cancelled todo",
           "default": false
         },
+        "projectsTodo.hideArchives": {
+          "type": "boolean",
+          "description": "Hide any archive section",
+          "default": true
+        },
         "projectsTodo.filterRegex": {
           "type": "string",
           "description": "List only projects having a name matching this regex",

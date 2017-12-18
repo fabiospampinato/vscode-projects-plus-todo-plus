@@ -35,6 +35,18 @@ function parseTodo ( config, str ) {
 
   }
 
+  if ( config.hideArchives ) {
+
+    const match = _.last ( TodoUtils.getAllMatches ( str, TodoConsts.regexes.archive ) )
+
+    if ( match ) {
+
+      str = str.substring ( 0, match.index );
+
+    }
+
+  }
+
   return str;
 
 }
