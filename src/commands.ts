@@ -57,7 +57,7 @@ function fetchTodos ( config, obj ) {
 
   ProjectsUtils.config.walkProjects ( obj, project => {
 
-    const todo = TodoUtils.todo.get ( project.path );
+    const todo = TodoUtils.todo.get ( ProjectsUtils.path.untildify ( project.path ) );
 
     if ( todo ) {
 
