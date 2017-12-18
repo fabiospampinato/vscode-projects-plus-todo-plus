@@ -92,8 +92,8 @@
   ],
   "dependencies": {
     "lodash": "^4.17.4",
-    "vscode-projects-plus": "^1.10.1",
-    "vscode-todo-plus": "^1.3.2"
+    "vscode-projects-plus": "^1.14.1",
+    "vscode-todo-plus": "^1.7.2"
   },
   "devDependencies": {
     "@types/node": "^6.0.40",
