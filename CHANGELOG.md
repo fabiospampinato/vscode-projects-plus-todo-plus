@@ -1,3 +1,6 @@
+### Version 1.4.1
+- Updated readme
+
 ### Version 1.4.0
 - Added support for Projects+ tilde expansion
 - Added an option for hiding archives
