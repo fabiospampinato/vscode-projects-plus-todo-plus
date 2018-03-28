@@ -147,9 +147,10 @@ function mergeTodos ( config, obj ) {
     if ( config.showPaths && item.todo ) {
 
       const normalizedPath = path.normalize ( item.todo.path ),
-            uri = vscode.Uri.file ( normalizedPath );
+            uriFilePath = vscode.Uri.file ( normalizedPath ).fsPath,
+            filePath = `/${_.trimStart ( uriFilePath, '/' )}`;
 
-      fileTag = ` @file://${uri.path}`;
+      fileTag = ` @file://${filePath}`;
 
     }
 
