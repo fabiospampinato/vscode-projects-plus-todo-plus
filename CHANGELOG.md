@@ -1,3 +1,6 @@
+### Version 1.4.2
+- Improved Windows support
+
 ### Version 1.4.1
 - Updated readme
 

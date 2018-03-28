@@ -3,7 +3,7 @@
   "displayName": "Projects+ Todo+",
   "description": "Bird's-eye view over your projects, view all your todo files aggregated into one.",
   "icon": "resources/logo-128x128.png",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "license": "MIT",
   "main": "out/src/extension.js",
   "publisher": "fabiospampinato",
