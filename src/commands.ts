@@ -6,12 +6,12 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import Config from './config';
 import Utils from './utils';
-import ProjectsConfig from '../node_modules/vscode-projects-plus/src/config';
-import ProjectsUtils from '../node_modules/vscode-projects-plus/src/utils';
-import TodoConsts from '../node_modules/vscode-todo-plus/src/consts';
-import TodoUtils from '../node_modules/vscode-todo-plus/src/utils';
+import ProjectsConfig from 'vscode-projects-plus/src/config';
+import ProjectsUtils from 'vscode-projects-plus/src/utils';
+import TodoConsts from 'vscode-todo-plus/src/consts';
+import TodoUtils from 'vscode-todo-plus/src/utils';
 
-/* HELPERS */
+/* HELPERS */ //TODO: Move these to `Utils`
 
 function parseTodo ( config, str ) {
 
@@ -191,7 +191,7 @@ async function todo () {
 
   } else {
 
-    vscode.window.showInformationMessage ( 'You don\'t have any todo across your projects' );
+    vscode.window.showInformationMessage ( 'You don\'t have any todo files across your projects' );
 
   }
 
