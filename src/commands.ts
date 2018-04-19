@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import * as micromatch from 'micromatch';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import Config from './config';
@@ -53,9 +54,32 @@ function parseTodo ( config, str ) {
 
 function filterProjectsByConfig ( config, obj ) {
 
+  if ( !config.filterRegex ) return;
+
   ProjectsUtils.config.walkProjects ( obj, ( project, parent ) => {
 
-    if ( config.filterRegex && !project.name.match ( new RegExp ( config.filterRegex ) ) ) {
+    if ( !project.name.match ( new RegExp ( config.filterRegex ) ) ) {
+
+      parent.projects = parent.projects.filter ( p => p !== project );
+
+    }
+
+  });
+
+}
+
+async function filterProjectsByGlob ( obj ) {
+
+  let includeGlob = await vscode.window.showInputBox ({
+    placeHolder: 'Glob: foo*',
+    value: '*'
+  });
+
+  if ( !includeGlob ) return;
+
+  ProjectsUtils.config.walkProjects ( obj, ( project, parent ) => {
+
+    if ( !micromatch.isMatch ( project.name, includeGlob ) ) {
 
       parent.projects = parent.projects.filter ( p => p !== project );
 
@@ -176,6 +200,8 @@ async function todo () {
         obj = _.cloneDeep ( await ProjectsConfig.get () );
 
   filterProjectsByConfig ( config, obj );
+
+  await filterProjectsByGlob ( obj );
 
   fetchTodos ( config, obj );
 
