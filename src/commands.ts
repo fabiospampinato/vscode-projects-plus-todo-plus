@@ -116,6 +116,18 @@ function fetchTodos ( config, obj ) {
 
 }
 
+async function fetchTodosEmbedded ( obj ) {
+
+  const projects = ProjectsUtils.config.getProjects ( obj );
+
+  for ( let project of projects ) {
+
+    project.todo = await TodoUtils.embedded.get ( ProjectsUtils.path.untildify ( project.path ) );
+
+  }
+
+}
+
 function filterProjectsByTodo ( config, obj ) {
 
   if ( !config.hideEmpty ) return;
@@ -168,7 +180,7 @@ function mergeTodos ( config, obj ) {
 
     let fileTag = '';
 
-    if ( config.showPaths && item.todo ) {
+    if ( config.showPaths && item.todo && item.todo.path ) {
 
       const normalizedPath = path.normalize ( item.todo.path ),
             uriFilePath = vscode.Uri.file ( normalizedPath ).fsPath,
@@ -182,7 +194,7 @@ function mergeTodos ( config, obj ) {
 
     if ( item.todo ) {
 
-      lines.push ( Utils.string.indent ( item.todo.content, depth + 1 ) );
+      lines.push ( Utils.string.indent ( item.todo.content || item.todo, depth + 1 ) );
 
     }
 
@@ -223,6 +235,35 @@ async function todo () {
 
 }
 
+async function todoEmbedded () {
+
+  const config = Config.get (),
+        obj = _.cloneDeep ( await ProjectsConfig.get () );
+
+  filterProjectsByConfig ( config, obj );
+
+  await filterProjectsByGlob ( obj );
+
+  await fetchTodosEmbedded ( obj );
+
+  filterProjectsByTodo ( config, obj );
+
+  filterGroups ( config, obj );
+
+  const content = mergeTodos ( config, obj );
+
+  if ( content ) {
+
+    Utils.editor.open ( content );
+
+  } else {
+
+    vscode.window.showInformationMessage ( 'You don\'t have any embedded todos across your projects' );
+
+  }
+
+}
+
 /* EXPORT */
 
-export {todo};
+export {todo, todoEmbedded};

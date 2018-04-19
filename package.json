@@ -8,7 +8,8 @@
   "main": "out/src/extension.js",
   "publisher": "fabiospampinato",
   "activationEvents": [
-    "onCommand:projects.todo"
+    "onCommand:projects.todo",
+    "onCommand:projects.todoEmbedded"
   ],
   "contributes": {
     "configuration": {
@@ -61,6 +62,10 @@
       {
         "command": "projects.todo",
         "title": "Projects: Todo"
+      },
+      {
+        "command": "projects.todoEmbedded",
+        "title": "Projects: Embedded Todos"
       }
     ]
   },
@@ -99,7 +104,7 @@
     "lodash": "^4.17.4",
     "micromatch": "^3.1.10",
     "vscode-projects-plus": "^1.15.3",
-    "vscode-todo-plus": "^1.10.5"
+    "vscode-todo-plus": "^1.10.6"
   },
   "devDependencies": {
     "@types/node": "^6.0.40",
