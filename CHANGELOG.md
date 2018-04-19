@@ -1,3 +1,6 @@
+### Version 1.5.0
+- Added support for filtering projects by a glob
+
 ### Version 1.4.2
 - Improved Windows support
 
