@@ -1,3 +1,6 @@
+### Version 1.6.0
+- Added support for embedded todos
+
 ### Version 1.5.0
 - Added support for filtering projects by a glob
 
