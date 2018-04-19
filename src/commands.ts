@@ -7,10 +7,10 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import Config from './config';
 import Utils from './utils';
-import ProjectsConfig from 'vscode-projects-plus/src/config';
-import ProjectsUtils from 'vscode-projects-plus/src/utils';
-import TodoConsts from 'vscode-todo-plus/src/consts';
-import TodoUtils from 'vscode-todo-plus/src/utils';
+import ProjectsConfig from 'vscode-projects-plus/out/src/config';
+import ProjectsUtils from 'vscode-projects-plus/out/src/utils';
+import TodoConsts from 'vscode-todo-plus/out/src/consts';
+import TodoUtils from 'vscode-todo-plus/out/src/utils';
 
 /* HELPERS */ //TODO: Move these to `Utils`
 
@@ -38,7 +38,7 @@ function parseTodo ( config, str ) {
 
   if ( config.hideArchives ) {
 
-    const match = _.last ( TodoUtils.getAllMatches ( str, TodoConsts.regexes.archive ) )
+    const match = _.last ( TodoUtils.getAllMatches ( str, TodoConsts.regexes.archive ) ) as any;
 
     if ( match ) {
 
