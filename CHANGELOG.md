@@ -1,3 +1,6 @@
+### Version 1.6.1
+- Updated dependencies
+
 ### Version 1.6.0
 - Added support for embedded todos
 
