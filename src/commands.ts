@@ -4,6 +4,7 @@
 import * as _ from 'lodash';
 import * as micromatch from 'micromatch';
 import * as path from 'path';
+import stringMatches from 'string-matches';
 import * as vscode from 'vscode';
 import Config from './config';
 import Utils from './utils';
@@ -16,6 +17,7 @@ import TodoUtils from 'vscode-todo-plus/out/src/utils';
 
 function parseTodo ( config, str ) {
 
+  str = _.trimEnd ( str );
   str = Utils.string.stripEmptyLines ( str );
 
   if ( config.hideDone ) {
@@ -26,7 +28,7 @@ function parseTodo ( config, str ) {
 
   if ( config.hideCancelled ) {
 
-    str = Utils.string.stripRegex ( str, TodoConsts.regexes.todoCancel );
+    str = Utils.string.stripRegex ( str, TodoConsts.regexes.todoCancelled );
 
   }
 
@@ -38,7 +40,7 @@ function parseTodo ( config, str ) {
 
   if ( config.hideArchives ) {
 
-    const match = _.last ( TodoUtils.getAllMatches ( str, TodoConsts.regexes.archive ) ) as any;
+    const match = _.last ( stringMatches ( str, TodoConsts.regexes.archive ) ) as any;
 
     if ( match ) {
 
@@ -102,7 +104,7 @@ function fetchTodos ( config, obj ) {
       if ( todo.content ) {
 
         const linesNr = todo.content.split ( '\n' ).filter ( _.identity ).length,
-              projectsNr = TodoUtils.getAllMatches ( todo.content, TodoConsts.regexes.project, true ).length;
+              projectsNr = stringMatches ( todo.content, TodoConsts.regexes.project ).length;
 
         if ( config.hideEmpty && linesNr === projectsNr ) return; // Only projects is considered empty
 
@@ -116,13 +118,15 @@ function fetchTodos ( config, obj ) {
 
 }
 
-async function fetchTodosEmbedded ( obj ) {
+async function fetchTodosEmbedded ( config, obj ) {
 
   const projects = ProjectsUtils.config.getProjects ( obj );
 
   for ( let project of projects ) {
 
     project.todo = await TodoUtils.embedded.get ( ProjectsUtils.path.untildify ( project.path ) );
+
+    project.todo = parseTodo ( config, project.todo );
 
   }
 
@@ -244,7 +248,7 @@ async function todoEmbedded () {
 
   await filterProjectsByGlob ( obj );
 
-  await fetchTodosEmbedded ( obj );
+  await fetchTodosEmbedded ( config, obj );
 
   filterProjectsByTodo ( config, obj );
 

@@ -103,8 +103,9 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "micromatch": "^3.1.10",
-    "vscode-projects-plus": "^1.15.3",
-    "vscode-todo-plus": "^1.10.6"
+    "string-matches": "^1.0.1",
+    "vscode-projects-plus": "^1.17.0",
+    "vscode-todo-plus": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "^6.0.40",
