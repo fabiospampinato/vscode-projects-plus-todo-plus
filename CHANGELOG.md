@@ -1,3 +1,6 @@
+### Version 1.6.2
+- Ensuring the editors will be opened as non-preview editors
+
 ### Version 1.6.1
 - Updated dependencies
 
