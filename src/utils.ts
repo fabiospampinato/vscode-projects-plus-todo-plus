@@ -35,7 +35,7 @@ const Utils = {
 
       vscode.workspace.openTextDocument ({ language: TodoConsts.languageId }).then ( ( textDocument: vscode.TextDocument ) => {
 
-        vscode.window.showTextDocument ( textDocument ).then ( ( textEditor: vscode.TextEditor ) => {
+        vscode.window.showTextDocument ( textDocument, { preview: false} ).then ( ( textEditor: vscode.TextEditor ) => {
 
           textEditor.edit ( edit => {
 
