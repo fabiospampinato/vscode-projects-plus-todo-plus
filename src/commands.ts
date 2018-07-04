@@ -4,6 +4,7 @@
 import * as _ from 'lodash';
 import * as micromatch from 'micromatch';
 import * as path from 'path';
+import * as querystring from 'querystring';
 import stringMatches from 'string-matches';
 import * as vscode from 'vscode';
 import Config from './config';
@@ -178,7 +179,8 @@ function filterGroups ( config, obj, maxDepth = Infinity ) {
 
 function mergeTodos ( config, obj ) {
 
-  const lines = [];
+  const sepRe = new RegExp ( querystring.escape ( '/' ), 'g' ),
+        lines = [];
 
   ProjectsUtils.config.walk ( obj, ( item, parent, depth ) => {
 
@@ -188,9 +190,10 @@ function mergeTodos ( config, obj ) {
 
       const normalizedPath = path.normalize ( item.todo.path ),
             uriFilePath = vscode.Uri.file ( normalizedPath ).fsPath,
-            filePath = `/${_.trimStart ( uriFilePath, '/' )}`;
+            filePath = `/${_.trimStart ( uriFilePath, '/' )}`,
+            encodedFilePath = querystring.escape ( filePath ).replace ( sepRe, '/' );
 
-      fileTag = ` @file://${filePath}`;
+      fileTag = ` @file://${encodedFilePath}`;
 
     }
 
