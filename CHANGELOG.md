@@ -1,3 +1,6 @@
+### Version 1.6.3
+- Fixed support for folders and files names containing special characters
+
 ### Version 1.6.2
 - Ensuring the editors will be opened as non-preview editors
 
