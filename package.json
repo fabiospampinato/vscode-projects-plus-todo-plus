@@ -88,7 +88,7 @@
     "url": "https://github.com/fabiospampinato/vscode-projects-plus-todo-plus.git"
   },
   "engines": {
-    "vscode": "^1.21.0"
+    "vscode": "^1.25.0"
   },
   "keywords": [
     "vscode",
@@ -104,8 +104,8 @@
     "lodash": "^4.17.4",
     "micromatch": "^3.1.10",
     "string-matches": "^1.0.1",
-    "vscode-projects-plus": "^1.17.0",
-    "vscode-todo-plus": "^2.1.0"
+    "vscode-projects-plus": "^1.18.0",
+    "vscode-todo-plus": "^4.0.2"
   },
   "devDependencies": {
     "@types/node": "^6.0.40",
