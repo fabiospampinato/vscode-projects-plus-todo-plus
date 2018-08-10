@@ -1,3 +1,6 @@
+### Version 1.6.4
+- Updated dependencies
+
 ### Version 1.6.3
 - Fixed support for folders and files names containing special characters
 
