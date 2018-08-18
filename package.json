@@ -105,7 +105,7 @@
     "micromatch": "^3.1.10",
     "string-matches": "^1.0.1",
     "vscode-projects-plus": "^1.18.0",
-    "vscode-todo-plus": "^4.0.2"
+    "vscode-todo-plus": "^4.3.2"
   },
   "devDependencies": {
     "@types/node": "^6.0.40",

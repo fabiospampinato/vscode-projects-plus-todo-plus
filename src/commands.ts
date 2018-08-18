@@ -127,9 +127,7 @@ async function fetchTodosEmbedded ( config, obj ) {
 
     const todos = await TodoUtils.embedded.get ( ProjectsUtils.path.untildify ( project.path ), false, true, false );
 
-    TodoUtils.embedded.unwatchFilePaths ();
-    TodoUtils.embedded.filePaths = undefined;
-    TodoUtils.embedded.fileData = {};
+    delete TodoUtils.embedded.filePaths;
 
     project.todo = TodoUtils.embedded.renderTodos ( todos );
     project.todo = parseTodo ( config, project.todo );
