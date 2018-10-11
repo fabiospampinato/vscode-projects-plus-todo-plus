@@ -1,3 +1,6 @@
+### Version 1.6.7
+- Fixed a regression
+
 ### Version 1.6.6
 - Bundling with webpack
 
