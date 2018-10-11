@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as vscode from 'vscode';
 import * as Commands from './commands';
 import Config from './config';
-import TodoConsts from '../node_modules/vscode-todo-plus/src/consts';
+import TodoConsts from 'vscode-todo-plus/out/src/consts';
 
 /* UTILS */
 

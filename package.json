@@ -5,7 +5,7 @@
   "icon": "resources/logo-128x128.png",
   "version": "1.6.5",
   "license": "MIT",
-  "main": "out/src/extension.js",
+  "main": "out/extension.js",
   "publisher": "fabiospampinato",
   "activationEvents": [
     "onCommand:projects.todo",
@@ -70,9 +70,10 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "tsc -p ./",
+    "vscode:prepublish": "rm -rf out && webpack --mode production",
     "publish": "vsce publish && npm publish",
-    "compile": "tsc -watch -p ./",
+    "compile": "webpack --mode development",
+    "compile:watch": "webpack --mode development --watch",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "node ./node_modules/vscode/bin/test"
   },
@@ -103,15 +104,17 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "micromatch": "^3.1.10",
-    "string-matches": "^1.0.1",
-    "vscode-projects-plus": "^1.18.0",
-    "vscode-todo-plus": "^4.3.2"
+    "string-matches": "^1.0.2",
+    "vscode-projects-plus": "^1.19.2",
+    "vscode-todo-plus": "^4.8.3"
   },
   "devDependencies": {
     "@types/node": "^6.0.40",
+    "ts-loader": "^5.2.1",
     "tslint": "^4.4.2",
-    "typescript": "~2.4.0",
-    "vscode": "^1.1.4"
+    "typescript": "~2.8.0",
+    "vscode": "^1.1.4",
+    "webpack": "^4.20.2"
   },
   "extensionDependencies": [
     "fabiospampinato.vscode-projects-plus",
