@@ -1,7 +1,7 @@
 # Projects+ Todo+
 
 <p align="center">
-	<img src="https://raw.githubusercontent.com/fabiospampinato/vscode-projects-plus-todo-plus/master/resources/logo-128x128.png" alt="Logo">
+	<img src="https://raw.githubusercontent.com/fabiospampinato/vscode-projects-plus-todo-plus/master/resources/logo.png" width="128" alt="Logo">
 </p>
 
 Bird's-eye view over your projects, view all your todo files aggregated into one.
