@@ -102,6 +102,7 @@
     "Other"
   ],
   "dependencies": {
+    "@types/node": "^10.12.8",
     "lodash": "^4.17.4",
     "micromatch": "^3.1.10",
     "string-matches": "^1.0.2",
@@ -109,7 +110,6 @@
     "vscode-todo-plus": "^4.8.3"
   },
   "devDependencies": {
-    "@types/node": "^6.0.40",
     "ts-loader": "^5.2.1",
     "typescript": "~2.8.0",
     "vscode": "^1.1.4",
