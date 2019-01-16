@@ -1,0 +1,9 @@
+
+☐ Moving projects up and down is buggy
+☐ Due tag: @due(+timestamp)
+  ☐ Add something in the gutter or the overview ruler to higlight them
+☐ Formatting:
+  ☐ Autocomplete these characters: *_~`
+  ☐ Style/Code commands (cmd+b/i/s/`)
+    ☐ https://github.com/neilsustc/vscode-markdown/blob/master/src/formatting.ts
+  ☐ Maybe remove formatting in favor of `vscode-highlight`

@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/fabiospampinato/vscode-todo-plus.git
+	branch = master
+	commit = 06d3367a697af6caf8ca735b42046667c2be7506
+	parent = 870503d3d69cd5774898ea7a4072f303dd8250b9
+	method = merge
+	cmdver = 0.4.0
