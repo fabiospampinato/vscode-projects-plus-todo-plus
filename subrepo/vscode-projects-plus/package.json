@@ -1,0 +1,439 @@
+{
+  "name": "vscode-projects-plus",
+  "displayName": "Projects+",
+  "description": "An extension for managing projects. Feature rich, customizable, automatically finds your projects",
+  "icon": "resources/logo/logo-128x128.png",
+  "version": "1.21.1",
+  "license": "MIT",
+  "main": "out/extension.js",
+  "publisher": "fabiospampinato",
+  "author": {
+    "name": "Fabio Spampinato",
+    "email": "spampinabio@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/fabiospampinato/vscode-projects-plus/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabiospampinato/vscode-projects-plus"
+  },
+  "engines": {
+    "vscode": "^1.21.0"
+  },
+  "keywords": [
+    "vscode",
+    "vsc",
+    "extension",
+    "projects"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Projects - Configuration",
+      "properties": {
+        "projects.activeIndicator": {
+          "type": "boolean",
+          "description": "Show an active indicator next to the name",
+          "default": true
+        },
+        "projects.configPath": {
+          "type": "string",
+          "description": "The location of the configuration file"
+        },
+        "projects.iconsASCII": {
+          "type": "boolean",
+          "description": "Use ASCII icons instead of Octicons",
+          "default": true
+        },
+        "projects.indentationSpaces": {
+          "type": "number",
+          "description": "Number of spaces to use for indentation",
+          "default": 4
+        },
+        "projects.invertPathAndDescription": {
+          "type": "boolean",
+          "description": "Invert a project path and description",
+          "default": false
+        },
+        "projects.showPaths": {
+          "type": "boolean",
+          "description": "Show projects' paths in the quickpick",
+          "default": true
+        },
+        "projects.showDescriptions": {
+          "type": "boolean",
+          "description": "Show projects' descriptions in the quickpick",
+          "default": true
+        },
+        "projects.showAheadBehind": {
+          "type": "boolean",
+          "description": "Show how many commits ahead or behind the repository is",
+          "default": false
+        },
+        "projects.showBranch": {
+          "type": "boolean",
+          "description": "Show projects' branches in the quickpick",
+          "default": false
+        },
+        "projects.ignoreBranches": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Prevent these branches from being shown",
+          "default": [
+            "master"
+          ]
+        },
+        "projects.checkDirty": {
+          "type": "boolean",
+          "description": "Check projects' repositories for uncommitted changes",
+          "default": false
+        },
+        "projects.checkPaths": {
+          "type": "boolean",
+          "description": "Check projects' paths existence",
+          "default": false
+        },
+        "projects.filterDirty": {
+          "type": "boolean",
+          "description": "List only dirty projects",
+          "default": false
+        },
+        "projects.filterRegex": {
+          "type": "string",
+          "description": "List only projects having a name matching this regex",
+          "default": false
+        },
+        "projects.group": {
+          "type": "string",
+          "description": "The active context group"
+        },
+        "projects.allGroupsName": {
+          "type": "string",
+          "description": "A setting for renaming the \"All Groups\" special group",
+          "default": "All Groups"
+        },
+        "projects.refreshDepth": {
+          "type": "number",
+          "description": "Maximum depth to look at when refreshing",
+          "default": 2
+        },
+        "projects.refreshIgnoreFolders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Ignore these folders when refreshing",
+          "default": [
+            "bower_components",
+            "node_modules",
+            "typings"
+          ]
+        },
+        "projects.refreshRoots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Root paths from where to start searching for projects",
+          "default": []
+        },
+        "projects.sortGroups": {
+          "type": "boolean",
+          "description": "Sort groups alphabetically",
+          "default": true
+        },
+        "projects.sortProjects": {
+          "type": "boolean",
+          "description": "Sort projects alphabetically",
+          "default": true
+        },
+        "projects.groupsOnTop": {
+          "type": "boolean",
+          "description": "Display groups on top of projects. This cannot be false if either `sortGroups` or `sortProjects` is false",
+          "default": true
+        },
+        "projects.statusbarEnabled": {
+          "type": "boolean",
+          "description": "Enable the statusbar component",
+          "default": true
+        },
+        "projects.statusbarAlignment": {
+          "type": "string",
+          "description": "Should the item be placed to the left or right?",
+          "default": "left"
+        },
+        "projects.statusbarColor": {
+          "type": "string",
+          "description": "The foreground color for this item",
+          "default": ""
+        },
+        "projects.statusbarCommand": {
+          "type": "string",
+          "description": "Command to execute on click",
+          "default": "projects.open"
+        },
+        "projects.statusbarPriority": {
+          "type": "number",
+          "description": "The priority of this item. Higher value means the item should be shown more to the left",
+          "default": -1
+        },
+        "projects.statusbarTemplate": {
+          "type": "string",
+          "description": "Template for rendering the statusbar content",
+          "default": "$(file-directory) [group] $(chevron-right) [project]"
+        },
+        "projects.useTilde": {
+          "type": "boolean",
+          "description": "Automatically save paths using tilde, i.e. \"~/project\" instead of \"/Users/me/project\"",
+          "default": true
+        },
+        "projects.viewAllEnabled": {
+          "type": "boolean",
+          "description": "Show or hide the \"Projects\" explorer view",
+          "default": false
+        },
+        "projects.viewOpenInNewWindow": {
+          "type": "boolean",
+          "description": "Open projects in a new window",
+          "default": false
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "projects.editConfig",
+        "title": "Projects: Edit Configuration",
+        "icon": {
+          "light": "resources/icons/options_light.svg",
+          "dark": "resources/icons/options_dark.svg"
+        }
+      },
+      {
+        "command": "projects.open",
+        "title": "Project: Open"
+      },
+      {
+        "command": "projects.openInNewWindow",
+        "title": "Project: Open in New Window"
+      },
+      {
+        "command": "projects.addToWorkspace",
+        "title": "Project: Add to Workspace"
+      },
+      {
+        "command": "projects.refresh",
+        "title": "Projects: Refresh",
+        "icon": {
+          "light": "resources/icons/refresh_light.svg",
+          "dark": "resources/icons/refresh_dark.svg"
+        }
+      },
+      {
+        "command": "projects.remove",
+        "title": "Project: Remove"
+      },
+      {
+        "command": "projects.save",
+        "title": "Project: Save"
+      },
+      {
+        "command": "projects.openGroup",
+        "title": "Projects: Open Group"
+      },
+      {
+        "command": "projects.switchGroup",
+        "title": "Projects: Switch Group"
+      },
+      {
+        "command": "projects.viewOpenProject",
+        "title": "Open"
+      },
+      {
+        "command": "projects.viewOpenProjectInNewWindow",
+        "title": "Open in New Window"
+      },
+      {
+        "command": "projects.viewAddProjectToWorkspace",
+        "title": "Add to Workspace"
+      },
+      {
+        "command": "projects.viewOpenGroup",
+        "title": "Open Group"
+      },
+      {
+        "command": "projects.viewSwitchGroup",
+        "title": "Switch Group"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "projects.open",
+        "key": "ctrl+alt+p",
+        "mac": "cmd+alt+p"
+      },
+      {
+        "command": "projects.openInNewWindow",
+        "key": "ctrl+alt+shift+p",
+        "mac": "cmd+alt+shift+p"
+      },
+      {
+        "command": "projects.openGroup",
+        "key": "ctrl+alt+shift+x",
+        "mac": "cmd+alt+shift+x"
+      },
+      {
+        "command": "projects.switchGroup",
+        "key": "ctrl+alt+x",
+        "mac": "cmd+alt+x"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "projects.views.explorer.all",
+          "name": "Projects",
+          "when": "config.projects.viewAllEnabled == true"
+        }
+      ],
+      "projects": [
+        {
+          "id": "projects.views.activity_bar.all",
+          "name": "All"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "projects",
+          "title": "Projects",
+          "icon": "resources/icons/activity_bar_logo.svg"
+        }
+      ]
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "projects.viewOpenProject",
+          "when": "false"
+        },
+        {
+          "command": "projects.viewOpenProjectInNewWindow",
+          "when": "false"
+        },
+        {
+          "command": "projects.viewAddProjectToWorkspace",
+          "when": "false"
+        },
+        {
+          "command": "projects.viewOpenGroup",
+          "when": "false"
+        },
+        {
+          "command": "projects.viewSwitchGroup",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "projects.editConfig",
+          "when": "view == projects.views.explorer.all",
+          "group": "navigation"
+        },
+        {
+          "command": "projects.refresh",
+          "when": "view == projects.views.explorer.all",
+          "group": "navigation"
+        },
+        {
+          "command": "projects.editConfig",
+          "when": "view == projects.views.activity_bar.all",
+          "group": "navigation"
+        },
+        {
+          "command": "projects.refresh",
+          "when": "view == projects.views.activity_bar.all",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "projects.viewOpenProject",
+          "when": "view == projects.views.explorer.all && viewItem == project"
+        },
+        {
+          "command": "projects.viewOpenProjectInNewWindow",
+          "when": "view == projects.views.explorer.all && viewItem == project"
+        },
+        {
+          "command": "projects.viewAddProjectToWorkspace",
+          "when": "view == projects.views.explorer.all && viewItem == project"
+        },
+        {
+          "command": "projects.viewOpenGroup",
+          "when": "view == projects.views.explorer.all && viewItem == group"
+        },
+        {
+          "command": "projects.viewSwitchGroup",
+          "when": "view == projects.views.explorer.all && viewItem == group"
+        },
+        {
+          "command": "projects.viewOpenProject",
+          "when": "view == projects.views.activity_bar.all && viewItem == project"
+        },
+        {
+          "command": "projects.viewOpenProjectInNewWindow",
+          "when": "view == projects.views.activity_bar.all && viewItem == project"
+        },
+        {
+          "command": "projects.viewAddProjectToWorkspace",
+          "when": "view == projects.views.activity_bar.all && viewItem == project"
+        },
+        {
+          "command": "projects.viewOpenGroup",
+          "when": "view == projects.views.activity_bar.all && viewItem == group"
+        },
+        {
+          "command": "projects.viewSwitchGroup",
+          "when": "view == projects.views.activity_bar.all && viewItem == group"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "rm -rf out && webpack --mode production",
+    "compile": "webpack --mode development",
+    "compile:watch": "webpack --mode development --watch",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.118",
+    "@types/node": "^10.12.8",
+    "absolute": "0.0.1",
+    "json5": "^0.5.1",
+    "lodash": "^4.17.4",
+    "mkdirp": "^0.5.1",
+    "pify": "^3.0.0",
+    "plist": "^2.1.0",
+    "tildify": "^1.2.0",
+    "untildify": "^3.0.2",
+    "walker": "^1.0.7"
+  },
+  "devDependencies": {
+    "ts-loader": "^5.2.1",
+    "typescript": "^2.4.1",
+    "vscode": "^1.1.4",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  }
+}

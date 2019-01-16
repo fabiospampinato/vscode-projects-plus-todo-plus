@@ -1,0 +1,18 @@
+
+Now:
+  ☐ A `Project: Add to Workspace` command
+  ☐ Add a `projects.favorites` view
+  ☐ Use `ExtensionContext.globalState` instead of custom files
+
+Next:
+  ☐ Fix active project showed on top of the others (distracting)(test by searching for "vscode-")
+
+Future:
+  ☐ Show an indeterminate progressbar when refreshing
+  ☐ Add support for nested groups switching even if groups' names aren't unique
+
+Maybe:
+  ☐ Add a `Project: Move` command (Subset of Save)
+  ☐ Add a `Project: Edit` command (Just an alias for Save)
+  ☐ Make configPath point to the default user settings folder (can be synced with the Sync extension) in a backward compatible manner
+  ☐ Add a `projects.recents` view
