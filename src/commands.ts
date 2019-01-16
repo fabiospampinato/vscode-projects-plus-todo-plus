@@ -9,10 +9,10 @@ import stringMatches from 'string-matches';
 import * as vscode from 'vscode';
 import Config from './config';
 import Utils from './utils';
-import ProjectsConfig from 'vscode-projects-plus/out/src/config';
-import ProjectsUtils from 'vscode-projects-plus/out/src/utils';
-import TodoConsts from 'vscode-todo-plus/out/src/consts';
-import TodoUtils from 'vscode-todo-plus/out/src/utils';
+import ProjectsConfig from '../subrepo/vscode-projects-plus/src/config';
+import ProjectsUtils from '../subrepo/vscode-projects-plus/src/utils';
+import TodoConsts from '../subrepo/vscode-todo-plus/src/consts';
+import TodoUtils from '../subrepo/vscode-todo-plus/src/utils';
 
 /* HELPERS */ //TODO: Move these to `Utils`
 
@@ -78,7 +78,7 @@ async function filterProjectsByGlob ( obj ) {
     value: '*'
   });
 
-  if ( !includeGlob ) return;
+  if ( !includeGlob ) return false;
 
   ProjectsUtils.config.walkProjects ( obj, ( project, parent ) => {
 
@@ -89,6 +89,8 @@ async function filterProjectsByGlob ( obj ) {
     }
 
   });
+
+  return true;
 
 }
 
@@ -125,11 +127,11 @@ async function fetchTodosEmbedded ( config, obj ) {
 
   for ( let project of projects ) {
 
-    const todos = await TodoUtils.embedded.get ( ProjectsUtils.path.untildify ( project.path ), false, true, false );
+    const todos = await TodoUtils.embedded.provider.get ( ProjectsUtils.path.untildify ( project.path ), false, true, false );
 
-    delete TodoUtils.embedded.filePaths;
+    delete TodoUtils.embedded.provider.filesData;
 
-    project.todo = TodoUtils.embedded.renderTodos ( todos );
+    project.todo = TodoUtils.embedded.provider.renderTodos ( todos );
     project.todo = parseTodo ( config, project.todo );
 
   }
@@ -223,7 +225,9 @@ async function todo () {
 
   filterProjectsByConfig ( config, obj );
 
-  await filterProjectsByGlob ( obj );
+  const filtered = await filterProjectsByGlob ( obj );
+
+  if ( !filtered ) return;
 
   fetchTodos ( config, obj );
 
@@ -247,12 +251,16 @@ async function todo () {
 
 async function todoEmbedded () {
 
+  await TodoUtils.embedded.initProvider ();
+
   const config = Config.get (),
         obj = _.cloneDeep ( await ProjectsConfig.get () );
 
   filterProjectsByConfig ( config, obj );
 
-  await filterProjectsByGlob ( obj );
+  const filtered = await filterProjectsByGlob ( obj );
+
+  if ( !filtered ) return;
 
   await fetchTodosEmbedded ( config, obj );
 
