@@ -1,3 +1,6 @@
+### Version 1.6.10
+- Loading vscode-projects-plus and vscode-todo-plus as subrepos
+
 ### Version 1.6.9
 - Readme: using hi-res logo
 
