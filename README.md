@@ -21,9 +21,9 @@ ext install fabiospampinato.vscode-projects-plus-todo-plus
 It adds 2 commands to the command palette:
 
 ```js
-Projects: Todo // Open a file containg all your todo files aggregated into one
-Projects: Embedded Todos // Open a file containg all your embedded todos aggregated into one
-```
+Projects: Todo // Open a file containing all your todo files aggregated into one
+Projects: Embedded Todos // Open a file containing all your embedded todos aggregated into one
+```penso che vengo, se trovo come o se non è troppo presto, penso in caso messo jeans e
 
 ## Settings
 
